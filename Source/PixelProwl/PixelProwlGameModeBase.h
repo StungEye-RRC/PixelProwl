@@ -13,5 +13,7 @@ UCLASS()
 class PIXELPROWL_API APixelProwlGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
-	
+
+protected:
+	virtual void BeginPlay() override;
 };
