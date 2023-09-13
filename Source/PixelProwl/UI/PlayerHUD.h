@@ -1,0 +1,25 @@
+// Fill out your copyright notice in the Description page of Project Settings.
+
+#pragma once
+
+#include "CoreMinimal.h"
+#include "Blueprint/UserWidget.h"
+#include "PlayerHUD.generated.h"
+
+/**
+ * 
+ */
+UCLASS(Abstract)
+class PIXELPROWL_API UPlayerHUD : public UUserWidget {
+	GENERATED_BODY()
+
+	virtual bool Initialize() override;
+
+	UFUNCTION()
+	void OnScoreChanged(int32 NewScore);
+	
+protected:
+	virtual void NativeConstruct() override;
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	class UTextBlock* Score;
+};

@@ -2,6 +2,7 @@
 
 
 #include "PickUp.h"
+#include "Logging/StructuredLog.h"
 
 
 // Sets default values
@@ -22,5 +23,10 @@ void APickUp::BeginPlay()
 void APickUp::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+}
+
+void APickUp::OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) {
+	UE_LOGFMT(LogTemp, Warning, "Pick Up Overlapped!");
 }
 

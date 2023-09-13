@@ -132,6 +132,10 @@ void APlayerCharacter::Look(const FInputActionValue& Value)
 		AddControllerYawInput(LookAxisVector.X);
 		AddControllerPitchInput(LookAxisVector.Y);
 	}
+	
+#define LOCTEXT_NAMESPACE "MyNamespace"
+	const FText ScoreMessage = FText::Format(LOCTEXT("UserScore", "Score: {0}"), 1.0f);
+#undef LOCTEXT_NAMESPACE
 }
 
 
