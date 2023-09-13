@@ -6,10 +6,11 @@
 #include "../PixelProwlPlayerState.h"
 
 bool UPlayerHUD::Initialize() {
-
 	APixelProwlPlayerState* PlayerState = GetOwningPlayerState<APixelProwlPlayerState>();
-
-	PlayerState->OnScoreChangedDelegate.AddUniqueDynamic(this, &UPlayerHUD::OnScoreChanged);
+	if (PlayerState)
+	{
+		PlayerState->OnScoreChangedDelegate.AddUniqueDynamic(this, &UPlayerHUD::OnScoreChanged);
+	}
 	
 	return Super::Initialize();
 }

@@ -6,6 +6,8 @@
 #include "Blueprint/UserWidget.h"
 #include "PlayerHUD.generated.h"
 
+class UTextBlock;
+
 /**
  * 
  */
@@ -20,6 +22,7 @@ class PIXELPROWL_API UPlayerHUD : public UUserWidget {
 	
 protected:
 	virtual void NativeConstruct() override;
+	
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
-	class UTextBlock* Score;
+	UTextBlock* Score;
 };
