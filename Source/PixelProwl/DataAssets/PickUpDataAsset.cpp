@@ -2,3 +2,4 @@
 
 
 #include "PickUpDataAsset.h"
+#include "PickUpBehaviour.h"

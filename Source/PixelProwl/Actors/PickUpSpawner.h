@@ -8,6 +8,7 @@
 
 class APickUp;
 class ALocationVolume;
+class UPickUpDataAsset;
 
 UCLASS()
 class PIXELPROWL_API APickUpSpawner : public AActor {
@@ -25,7 +26,7 @@ protected:
 	ALocationVolume* SpawnArea;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Spawner")
-	TArray<TSubclassOf<APickUp>> PickUpTypes;
+	TArray<UPickUpDataAsset*> PickUpTypes;
 
 	UFUNCTION(BlueprintCallable, Category = "Spawner")
 	void SpawnPickups();

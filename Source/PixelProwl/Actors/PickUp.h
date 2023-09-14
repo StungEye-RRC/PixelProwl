@@ -4,7 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "PixelProwl/DataAssets/PickUpBehaviour.h"
 #include "PickUp.generated.h"
+
+class UPickUpDataAsset;
+class UNiagaraComponent;
+class UNiagaraSystem;
+class UBoxComponent;
 
 UCLASS()
 class PIXELPROWL_API APickUp : public AActor
@@ -22,12 +28,23 @@ protected:
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+	void Init(UPickUpDataAsset* PickUpDataAsset);
 
 private:
 	UFUNCTION()
 	void OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
 						int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-	
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"), Category = "Setup")
-	class UNiagaraComponent* PickupFX;
+	UNiagaraComponent* PickupFX;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"), Category = "Setup")
+	UBoxComponent* CollisionBox;
+
+	UPROPERTY()
+	TArray<UPickUpBehaviour*> Behaviours;
+
+	UPROPERTY()
+	UPickUpDataAsset* Data;
+	
 };

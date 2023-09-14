@@ -2,6 +2,8 @@
 
 
 #include "PickUpSpawner.h"
+#include "PickUp.h"
+#include "PixelProwl/DataAssets/PickUpDataAsset.h"
 #include "Logging/StructuredLog.h"
 
 
@@ -16,7 +18,14 @@ void APickUpSpawner::BeginPlay() {
 	Super::BeginPlay();
 	if (!SpawnArea) {
 		UE_LOGFMT(LogTemp, Error, "No spawner volume specified for the pick up spawner!");
-	}		
+		return;
+	}
+	
+	if (!PickUpTypes.IsEmpty()) {
+		APickUp* PickUp = GetWorld()->SpawnActorDeferred<APickUp>(APickUp::StaticClass(), this->GetActorTransform());
+		PickUp->Init(PickUpTypes[0]);
+		PickUp->FinishSpawning(this->GetActorTransform());
+	}
 }
 
 void APickUpSpawner::SpawnPickups() {
