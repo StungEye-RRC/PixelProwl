@@ -19,10 +19,16 @@ class PIXELPROWL_API UPlayerHUD : public UUserWidget {
 
 	UFUNCTION()
 	void OnScoreChanged(int32 NewScore);
+
+	UFUNCTION()
+	void OnTimerChanged(FString NewTimer);
 	
 protected:
 	virtual void NativeConstruct() override;
 	
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	UTextBlock* Score;
+	
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	UTextBlock* Timer;
 };
