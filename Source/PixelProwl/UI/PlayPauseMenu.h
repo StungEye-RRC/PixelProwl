@@ -32,14 +32,23 @@ protected:
 	
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	UButton* QuitButton;
+	
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	UTextBlock* FinalScore;
 
 	UPROPERTY(BlueprintReadOnly)
 	UPixelProwlGameInstance* GameInstance;
 	
 	UPROPERTY(BlueprintReadOnly)
 	bool GameIsPaused = true;
+
+	UPROPERTY(BlueprintReadOnly)
+	bool GameIsOver = false;
 	
 private:
 	UFUNCTION()
 	void OnQuit();
+
+	UFUNCTION()
+	void OnTimerEnd(int32 Score);
 };

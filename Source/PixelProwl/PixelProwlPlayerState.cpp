@@ -14,15 +14,28 @@ int32 APixelProwlPlayerState::UpdateScore(int32 ScoreDelta) {
 void APixelProwlPlayerState::BeginPlay() {
 	Super::BeginPlay();
 	GetWorldTimerManager().SetTimer(CountDownTimerHandle, this, &APixelProwlPlayerState::CountDown, 1.0f, true );
-	OnTimerChangedDelegate.Broadcast(FString::Printf(TEXT("%02d:%02d"), Minutes, Seconds));
+	broadcastTimer();
 }
 
 void APixelProwlPlayerState::CountDown() {
-	Seconds--;	
+	Seconds--;
+	
 	if (Seconds < 0)  {
 		Seconds = 59;
 		Minutes--;
 	}
 
+	if (Seconds == 0 && Minutes == 0) {
+		// GetWorldTimerManager().ClearTimer(CountDownTimerHandle);
+		OnTimerEndDelegate.Broadcast(GetScore());
+		SetScore(0);
+		Seconds = 0;
+		Minutes = 5;
+		OnScoreChangedDelegate.Broadcast(GetScore());
+	}
+	broadcastTimer();
+}
+
+void APixelProwlPlayerState::broadcastTimer() {
 	OnTimerChangedDelegate.Broadcast(FString::Printf(TEXT("%02d:%02d"), Minutes, Seconds));
 }

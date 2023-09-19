@@ -8,7 +8,7 @@
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnScoreChangedSignature, int32, NewScore);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnTimerChangedSignature, FString, NewTime);
-
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnTimerEndSignature, int32, FinalScore);
 /**
  * 
  */
@@ -26,17 +26,23 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FOnTimerChangedSignature OnTimerChangedDelegate;
 
+	UPROPERTY()
+	FOnTimerEndSignature OnTimerEndDelegate;
+
 	UPROPERTY(BlueprintReadOnly, Category = "Countdown Timer")
-	int32 Minutes = 5;
+	int32 Minutes = 0;
 	
 	UPROPERTY(BlueprintReadOnly, Category = "Countdown Timer")
-	int32 Seconds = 0;
+	int32 Seconds = 10;
 
 	UPROPERTY()
 	FTimerHandle CountDownTimerHandle;
+	
 protected:
 	virtual void BeginPlay() override;
 	
 	UFUNCTION()
 	void CountDown();
+
+	void broadcastTimer();
 };
