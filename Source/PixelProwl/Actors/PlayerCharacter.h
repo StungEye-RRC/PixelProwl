@@ -7,6 +7,8 @@
 #include "InputActionValue.h"
 #include "PlayerCharacter.generated.h"
 
+class UPlayPauseMenu;
+
 UCLASS()
 class PIXELPROWL_API APlayerCharacter : public ACharacter
 {
@@ -34,7 +36,14 @@ class PIXELPROWL_API APlayerCharacter : public ACharacter
 
 	/** Look Input Action */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
-	class UInputAction* LookAction;	
+	class UInputAction* LookAction;
+
+	/** Play Payse Action */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	class UInputAction* PlayPauseAction;
+
+	UPROPERTY()
+	class UPlayPauseMenu* PlayPauseMenu;
 
 public:
 	// Sets default values for this character's properties
@@ -50,6 +59,8 @@ protected:
 	/** Called for looking input */
 	void Look(const FInputActionValue& Value);
 			
+	/** Called for looking input */
+	void PlayPause(const FInputActionValue& Value);
 
 public:
 	// Called every frame
@@ -57,4 +68,6 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	void SetMenuWidget(UPlayPauseMenu* Menu);
 };

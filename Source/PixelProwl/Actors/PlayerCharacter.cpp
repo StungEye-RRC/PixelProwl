@@ -11,6 +11,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "GameFramework/Controller.h"
 #include "Logging/StructuredLog.h"
+#include "PixelProwl/UI/PlayPauseMenu.h"
 
 
 // Sets default values
@@ -81,7 +82,7 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 	if (UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(PlayerInputComponent)) {
 
-		if (JumpAction && MoveAction && LookAction) {
+		if (JumpAction && MoveAction && LookAction && PlayPauseAction) {
 			//Jumping
 			EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Triggered, this, &ACharacter::Jump);
 			EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
@@ -91,10 +92,20 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 
 			//Looking
 			EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &APlayerCharacter::Look);
+
+			//Play/Pausing
+			EnhancedInputComponent->BindAction(PlayPauseAction, ETriggerEvent::Completed, this, &APlayerCharacter::PlayPause);
 		} else {
 			UE_LOGFMT(LogTemp, Warning, "One or more of the input actions has not be set in player blueprint." );
 		}
 	}
+}
+
+void APlayerCharacter::SetMenuWidget(UPlayPauseMenu* Menu) {
+	if (!Menu) {
+		UE_LOGFMT(LogTemp, Error, "Play Menu Didn't Properly Cast.");
+	}
+	PlayPauseMenu = Menu;
 }
 
 
@@ -132,10 +143,15 @@ void APlayerCharacter::Look(const FInputActionValue& Value)
 		AddControllerYawInput(LookAxisVector.X);
 		AddControllerPitchInput(LookAxisVector.Y);
 	}
-	
-#define LOCTEXT_NAMESPACE "MyNamespace"
-	const FText ScoreMessage = FText::Format(LOCTEXT("UserScore", "Score: {0}"), 1.0f);
-#undef LOCTEXT_NAMESPACE
+}
+
+void APlayerCharacter::PlayPause(const FInputActionValue& Value) {
+	UE_LOGFMT(LogTemp, Warning, "Play Pause Key Hit");
+	if (PlayPauseMenu) {
+		PlayPauseMenu->OnPlayPause();
+	} else {
+		UE_LOGFMT(LogTemp, Error, "setMenuWidget() hasn't been called in APlayerCharacter.");
+	}
 }
 
 

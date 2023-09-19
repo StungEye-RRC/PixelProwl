@@ -13,4 +13,8 @@ UCLASS()
 class PIXELPROWL_API UPixelProwlGameInstance : public UGameInstance
 {
 	GENERATED_BODY()
+
+public:
+	UFUNCTION(BlueprintCallable, Category = "Input Mode")
+	void SetInputMode(bool GameOnly) const;
 };
