@@ -16,6 +16,9 @@ UCLASS()
 class PIXELPROWL_API APixelProwlPlayerState : public APlayerState {
 	GENERATED_BODY()
 
+	static constexpr int32 TimerSeconds{0};
+	static constexpr int32 TimerMinutes{2};
+
 public:
 	UFUNCTION(BlueprintCallable, Category = "Score")
 	int32 UpdateScore(int32 ScoreDelta);
@@ -30,19 +33,21 @@ public:
 	FOnTimerEndSignature OnTimerEndDelegate;
 
 	UPROPERTY(BlueprintReadOnly, Category = "Countdown Timer")
-	int32 Minutes = 0;
+	int32 Minutes;
 	
 	UPROPERTY(BlueprintReadOnly, Category = "Countdown Timer")
-	int32 Seconds = 10;
+	int32 Seconds;
 
 	UPROPERTY()
 	FTimerHandle CountDownTimerHandle;
 	
 protected:
 	virtual void BeginPlay() override;
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 	
 	UFUNCTION()
 	void CountDown();
-
-	void broadcastTimer();
+	
+	void BroadcastTimer();
+	void ResetState();
 };

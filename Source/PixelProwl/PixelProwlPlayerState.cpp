@@ -14,7 +14,12 @@ int32 APixelProwlPlayerState::UpdateScore(int32 ScoreDelta) {
 void APixelProwlPlayerState::BeginPlay() {
 	Super::BeginPlay();
 	GetWorldTimerManager().SetTimer(CountDownTimerHandle, this, &APixelProwlPlayerState::CountDown, 1.0f, true );
-	broadcastTimer();
+	ResetState();
+}
+
+void APixelProwlPlayerState::EndPlay(const EEndPlayReason::Type EndPlayReason) {
+	Super::EndPlay(EndPlayReason);
+	GetWorldTimerManager().ClearTimer(CountDownTimerHandle);	
 }
 
 void APixelProwlPlayerState::CountDown() {
@@ -26,16 +31,21 @@ void APixelProwlPlayerState::CountDown() {
 	}
 
 	if (Seconds == 0 && Minutes == 0) {
-		// GetWorldTimerManager().ClearTimer(CountDownTimerHandle);
 		OnTimerEndDelegate.Broadcast(GetScore());
-		SetScore(0);
-		Seconds = 0;
-		Minutes = 5;
-		OnScoreChangedDelegate.Broadcast(GetScore());
+		ResetState();
+	} else {
+		BroadcastTimer();
 	}
-	broadcastTimer();
 }
 
-void APixelProwlPlayerState::broadcastTimer() {
+void APixelProwlPlayerState::BroadcastTimer() {
 	OnTimerChangedDelegate.Broadcast(FString::Printf(TEXT("%02d:%02d"), Minutes, Seconds));
+}
+
+void APixelProwlPlayerState::ResetState() {
+	SetScore(0);
+	Seconds = TimerSeconds;
+	Minutes = TimerMinutes;
+	OnScoreChangedDelegate.Broadcast(GetScore());
+	BroadcastTimer();
 }
