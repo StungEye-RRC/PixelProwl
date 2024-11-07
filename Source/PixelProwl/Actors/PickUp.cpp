@@ -42,7 +42,7 @@ void APickUp::Tick(float DeltaTime)
 }
 
 /*
- * Refactor such that we only keep the pointer to the data asset.
+ * TODO: Refactor such that we only keep the pointer to the data asset.
  * This way we can pass the pass both the data asset and the player character
  * to the Behaviour method!
  */
