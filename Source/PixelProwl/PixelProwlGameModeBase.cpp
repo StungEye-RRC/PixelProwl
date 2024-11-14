@@ -8,6 +8,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Logging/StructuredLog.h"
 #include "UI/PlayPauseMenu.h"
+#include "Actors/PlayerFollower.h"
 
 void APixelProwlGameModeBase::BeginPlay()
 {
@@ -34,5 +35,17 @@ void APixelProwlGameModeBase::BeginPlay()
 		PlayerCharacter->SetMenuWidget(Cast<UPlayPauseMenu>(PlayPauseWidget));
 	} else {
 		UE_LOGFMT(LogTemp, Error, "No Play/Pause widget specified in Game Mode Blueprint.");
+	}
+
+	if (PlayerCharacter && PlayerFollowerClass)
+	{
+		const FVector SpawnLocation = PlayerCharacter->GetActorLocation() + FVector(200.0f, 0.0f, 0.0f); // Offset a bit
+		const FRotator SpawnRotation = FRotator::ZeroRotator;
+
+		APlayerFollower* Follower = GetWorld()->SpawnActor<APlayerFollower>(PlayerFollowerClass, SpawnLocation, SpawnRotation);
+		if (Follower)
+		{
+			Follower->TargetCharacter = PlayerCharacter;
+		}
 	}
 }

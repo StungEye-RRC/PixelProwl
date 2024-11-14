@@ -8,6 +8,7 @@
 
 class APlayerCharacter;
 class UPixelProwlGameInstance;
+class APlayerFollower;
 /**
  * 
  */
@@ -37,4 +38,7 @@ protected:
 	TSubclassOf<UUserWidget> DefaultHUDWidget;
 	UPROPERTY()
 	UUserWidget* HUDWidget;
+
+	UPROPERTY(EditDefaultsOnly, Category="Follower")
+	TSubclassOf<APlayerFollower> PlayerFollowerClass; // Forward declare at top!
 };
