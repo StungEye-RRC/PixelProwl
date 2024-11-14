@@ -9,7 +9,9 @@
 class UTextBlock;
 
 /**
- * 
+ * This UUserWidget base class makes use of the BindWidget meta UPROPERTY such that
+ * the widgets can be controlled from C++ but defined and visually placed in Blueprint.
+ * See: https://benui.ca/unreal/ui-bindwidget/
  */
 UCLASS(Abstract)
 class PIXELPROWL_API UPlayerHUD : public UUserWidget {

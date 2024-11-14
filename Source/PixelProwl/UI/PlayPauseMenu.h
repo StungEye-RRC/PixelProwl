@@ -11,7 +11,7 @@ class UTextBlock;
 class UButton;
 
 /**
- * 
+ * See BindWidget comment in PlayerHUD.h.
  */
 UCLASS()
 class PIXELPROWL_API UPlayPauseMenu : public UUserWidget {
